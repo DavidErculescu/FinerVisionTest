@@ -55713,14 +55713,13 @@ var App = function (_Component) {
                 console.log(errors);
             }
 
-            this.handleDisplayValidationError(errors, 'step1');
-
             if (ok === 1) {
-                $("#step1").attr("status", "closing");
+                $("#step1").attr("status", "closed");
+                $("#step1").css("max-height", "60px");
                 $("#step2").attr("status", "open");
-                setTimeout(function () {
-                    $("#step1").attr("status", "closed");;
-                }.bind(this), 3000);
+                $("#step2").css("max-height", $("#step2")[0].scrollHeight + "px");
+            } else {
+                this.handleDisplayValidationError(errors, 'step1');
             }
         }
     }, {
@@ -55756,19 +55755,12 @@ var App = function (_Component) {
             }
 
             if (ok === 1) {
-                console.log("Step 2 is good!!!");
-            } else {
-                console.log(errors);
-            }
-
-            this.handleDisplayValidationError(errors, 'step2');
-
-            if (ok === 1) {
-                $("#step2").attr("status", "closing");
+                $("#step2").attr("status", "closed");
+                $("#step2").css("max-height", "60px");
                 $("#step3").attr("status", "open");
-                setTimeout(function () {
-                    $("#step2").attr("status", "closed");;
-                }.bind(this), 3000);
+                $("#step3").css("max-height", $("#step3")[0].scrollHeight + "px");
+            } else {
+                this.handleDisplayValidationError(errors, 'step2');
             }
         }
     }, {
@@ -55786,10 +55778,8 @@ var App = function (_Component) {
                 comments: this.state.comments
             });
 
-            $("#step3").attr("status", "closing");
-            setTimeout(function () {
-                $("#step3").attr("status", "closed");;
-            }.bind(this), 3000);
+            $("#step3").attr("status", "closed");
+            $("#step3").css("max-height", "60px");
         }
     }, {
         key: 'handleDisplayValidationError',
@@ -55798,222 +55788,283 @@ var App = function (_Component) {
             for (var error in errors) {
                 $("#" + step + " .errorContainer").html($("#" + step + " .errorContainer").html() + "<div class='alert alert-danger'>" + errors[error] + "</div>");
             }
+
+            $("#" + step).css("max-height", $("#" + step)[0].scrollHeight + "px");
         }
     }, {
         key: 'render',
         value: function render() {
-            var errors = this.state.errors;
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'row justify-content-center container' },
+                { className: 'row h-100 justify-content-center' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'form' },
+                    { className: 'form col-10 my-auto' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'form',
-                        { onSubmit: this.handleSubmit },
+                        { onSubmit: this.handleSubmit, className: 'row p-2' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'step', id: 'step1', status: 'open' },
+                            { className: 'col-12' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'step-title' },
+                                { className: 'step row', id: 'step1', status: 'open' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    { className: 'step-title-text' },
+                                    'h1',
+                                    { className: 'step-title w-100' },
                                     'Step 1: Your details'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'form-fields' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'errorContainer' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { className: 'first-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'First Name'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        id: 'firstname',
-                                        onChange: this.handleChangeFirstname,
-                                        value: this.state.firstname,
-                                        className: 'step-elements-input',
-                                        required: true
-                                    })
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
-                                    { className: 'second-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'Surname'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        id: 'surname',
-                                        onChange: this.handleChangeSurname,
-                                        value: this.state.surname,
-                                        className: 'step-elements-input',
-                                        required: true
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { className: 'third-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'Email'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        id: 'email',
-                                        onChange: this.handleChangeEmail,
-                                        value: this.state.email,
-                                        className: 'step-elements-input',
-                                        type: 'email',
-                                        required: true
-                                    })
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { type: 'button', className: 'step-elements-button', onClick: this.handleValidationStep1 },
-                                'Next >'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', { className: 'clear-float' })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'step', id: 'step2', status: 'closed' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'step-title' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    { className: 'step-title-text' },
-                                    'Step 2: Your details'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'form-fields' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'errorContainer' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { className: 'first-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'Mobile number'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        id: 'number',
-                                        onChange: this.handleChangeNumber,
-                                        value: this.state.number,
-                                        className: 'step-elements-input',
-                                        required: true
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { className: 'second-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'Date of birth'
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                        id: 'birth',
-                                        onChange: this.handleChangeBirth,
-                                        value: this.state.birth,
-                                        className: 'step-elements-input',
-                                        type: 'date',
-                                        required: true
-                                    })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'div',
-                                    { className: 'third-input step-elements' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        null,
-                                        'Gender'
-                                    ),
+                                    { className: 'col-12 p-0' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
-                                        { className: 'radio' },
+                                        { className: 'form-fields row' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'errorContainer w-100' }),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'label',
-                                            null,
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                                onChange: this.handleChangeGender,
-                                                checked: this.state.gender === 'Male',
-                                                type: 'radio',
-                                                value: 'Male'
-                                            }),
-                                            'Male'
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'div',
-                                        { className: 'radio' },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'label',
-                                            null,
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                                                onChange: this.handleChangeGender,
-                                                checked: this.state.gender === 'Female',
-                                                type: 'radio',
-                                                value: 'Female'
-                                            }),
-                                            'Female'
+                                            'div',
+                                            { className: 'col-12' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'First Name'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                        id: 'firstname',
+                                                        onChange: this.handleChangeFirstname,
+                                                        value: this.state.firstname,
+                                                        className: 'step-elements-input',
+                                                        required: true
+                                                    })
+                                                ),
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Surname'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                        id: 'surname',
+                                                        onChange: this.handleChangeSurname,
+                                                        value: this.state.surname,
+                                                        className: 'step-elements-input',
+                                                        required: true
+                                                    })
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Email'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                        id: 'email',
+                                                        onChange: this.handleChangeEmail,
+                                                        value: this.state.email,
+                                                        className: 'step-elements-input',
+                                                        type: 'email',
+                                                        required: true
+                                                    })
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'col-12' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'button',
+                                                        { type: 'button', className: 'step-elements-button float-right', onClick: this.handleValidationStep1 },
+                                                        'Next >'
+                                                    )
+                                                )
+                                            )
                                         )
                                     )
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { type: 'button', className: 'step-elements-button', onClick: this.handleValidationStep2 },
-                                'Next >'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', { className: 'clear-float' })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'step', id: 'step3', status: 'closed' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'step-title' },
+                                { className: 'step row', id: 'step2', status: 'closed' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    { className: 'step-title-text' },
-                                    'Step 3: Final comments'
+                                    'h1',
+                                    { className: 'step-title w-100' },
+                                    'Step 2: More comments'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'col-12 p-0' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'form-fields row' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'errorContainer w-100' }),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'col-12' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Mobile number'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                        id: 'number',
+                                                        onChange: this.handleChangeNumber,
+                                                        value: this.state.number,
+                                                        className: 'step-elements-input',
+                                                        required: true
+                                                    })
+                                                ),
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Date of birth'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                        id: 'birth',
+                                                        onChange: this.handleChangeBirth,
+                                                        value: this.state.birth,
+                                                        className: 'step-elements-input',
+                                                        type: 'date',
+                                                        required: true
+                                                    })
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-md-5 col-sm-7' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Gender'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'div',
+                                                        { className: 'radio' },
+                                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            'label',
+                                                            null,
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                                onChange: this.handleChangeGender,
+                                                                checked: this.state.gender === 'Male',
+                                                                type: 'radio',
+                                                                value: 'Male'
+                                                            }),
+                                                            'Male'
+                                                        )
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'div',
+                                                        { className: 'radio' },
+                                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            'label',
+                                                            null,
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                                onChange: this.handleChangeGender,
+                                                                checked: this.state.gender === 'Female',
+                                                                type: 'radio',
+                                                                value: 'Female'
+                                                            }),
+                                                            'Female'
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'row p-2' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'col-12' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'button',
+                                                { type: 'button', className: 'step-elements-button float-right', onClick: this.handleValidationStep2 },
+                                                'Next >'
+                                            )
+                                        )
+                                    )
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'step-elements' },
+                                { className: 'step row', id: 'step3', status: 'closed' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    null,
-                                    'Comments (optional)'
+                                    'h1',
+                                    { className: 'step-title w-100' },
+                                    'Step 3: Final comments'
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', {
-                                    onChange: this.handleChangeComments,
-                                    value: this.state.comments,
-                                    className: 'form-control step-comment-input'
-                                })
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { type: 'submit', className: 'step-elements-button' },
-                                'Submit'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', { className: 'clear-float' })
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'col-12 p-0' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'form-fields row' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'col-12' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'step-elements col-12' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'span',
+                                                        null,
+                                                        'Comments (optional)'
+                                                    ),
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', {
+                                                        onChange: this.handleChangeComments,
+                                                        value: this.state.comments,
+                                                        className: 'form-control step-comment-input'
+                                                    })
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row p-2' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'div',
+                                                    { className: 'col-12' },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'button',
+                                                        { type: 'submit', className: 'step-elements-button float-right' },
+                                                        'Submit'
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 )
@@ -56029,6 +56080,16 @@ var App = function (_Component) {
 
 if (document.getElementById('root')) {
     __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, null), document.getElementById('root'));
+
+    setTimeout(function () {
+        $(".step").each(function () {
+            if ($(this).attr("status") == "closed") {
+                $(this).css("max-height", "60px");
+            } else {
+                $(this).css("max-height", $(this)[0].scrollHeight + "px");
+            }
+        });
+    }, 100);
 }
 
 /***/ }),

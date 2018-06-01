@@ -5,6 +5,11 @@
 // Variables
 @import "variables";
 
+html,body
+{
+  height: 100%;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -18,123 +23,63 @@
   background-color: $body-bg;
 }
 
-.first-input{
-  float: left;
-}
-
-.second-input{
-  float: left;
-}
-
-.third-input{
-  margin-right: 0px;
-}
-
-.form-fields{
-  max-height: 146px;
-}
-
 .form{
   background-color: white;
   border-radius: 15px;
-  width: 700px;
-  padding: 5px;
+
+  box-shadow: 0 0 10px 5px #aaa;
 }
 
 .step{
   background-color: $step-bg;
-  width: 690px;
   border-radius: 15px;
-  height: 250px;
-  overflow-y: hidden;
+  overflow: hidden;
+  transition: max-height 0.5s;
 }
 
-#step2{
+.step:nth-child(2n){
   margin-top: 5px !important;
   margin-bottom: 5px !important;
 }
 
 .step-title{
-  background-color: $step-title-bg;
+  background: linear-gradient(to bottom, $step-title-bg1 , $step-title-bg2);
   border-radius: 15px;
-  width: 690px;
+  color: white;
+  font-size: 16px;
+  line-height: 16px;
   height: 60px;
-  padding-top: 15px !important;
+  padding: 22px 0;
   padding-left: 18px !important;
 }
 
-.step-title-text{
-  color: white;
-}
-
-.step-elements{
+.step-elements *{
   font-weight: bold;
-  padding: 10px;
-  width: 220px;
 }
 
 .step-elements-input{
   border: 0px;
   border-radius: 15px;
-  width: 200px;
+  display: block;
+  width: 100%;
   height: 35px;
 }
 
 .step-comment-input{
   border: 0px !important;
   border-radius: 15px !important;
-  width: 400px !important;
+  width: 100% !important;
   height: 100px !important;
 }
 
 .step-elements-button{
-  background-color: $step-button-bg;
+  background: linear-gradient(to bottom, $step-button-bg1 , $step-button-bg2);
   color: white;
   border: 0px;
   border-radius: 15px;
   width: 125px;
   text-align: center;
   height: 30px;
-  margin-bottom: 8px;
-  margin-right: 15px;
-  float: right;
-}
-
-@keyframes contract {
-  from {height: 250px}
-  to {height: 60px}
-}
-
-@keyframes expand {
-  from {height: 60px}
-  to {height: 250px}
-}
-
-[status="open"]{
-  animation-name: expand;
-  animation-duration: 3s;
-  .step-elements{
-    display: block;
-  }
-  .step-elements-button{
-    display: block;
-  }
-  max-height: 250px !important;
-}
-
-[status="closed"]{
-  .step-elements{
-    display: none;
-  }
-  .step-elements-button{
-    display: none;
-  }
-  max-height: 60px !important;
-}
-
-[status="closing"]{
-  animation-name: contract;
-  animation-duration: 3s;
 }
 
 // Bootstrap

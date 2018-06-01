@@ -22,7 +22,6 @@
 
     </head>
     <body>
-        <div class="container-fluid" id="root">
-        </div>
+        <div class="container h-100" id="root"></div>
     </body>
 </html>

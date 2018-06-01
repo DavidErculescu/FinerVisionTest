@@ -108,12 +108,14 @@ export default class App extends Component {
             console.log( errors);
         }
 
-        this.handleDisplayValidationError(errors, 'step1');
-
         if (ok === 1){
-            $("#step1").attr("status", "closing");
+            $("#step1").attr("status", "closed");
+            $("#step1").css("max-height", "60px");
             $("#step2").attr("status", "open");
-            setTimeout(function() { $("#step1").attr("status", "closed");; }.bind(this), 3000);
+            $("#step2").css("max-height", $("#step2")[0].scrollHeight+"px");
+        }
+        else {
+            this.handleDisplayValidationError(errors, 'step1');
         }
     }
 
@@ -146,18 +148,13 @@ export default class App extends Component {
         }
 
         if (ok === 1) {
-            console.log("Step 2 is good!!!")
+            $("#step2").attr("status", "closed");
+            $("#step2").css("max-height", "60px");
+            $("#step3").attr("status", "open");
+            $("#step3").css("max-height", $("#step3")[0].scrollHeight+"px");
         }
         else {
-            console.log( errors);
-        }
-
-        this.handleDisplayValidationError(errors, 'step2');
-
-        if (ok === 1){
-            $("#step2").attr("status", "closing");
-            $("#step3").attr("status", "open");
-            setTimeout(function() { $("#step2").attr("status", "closed");; }.bind(this), 3000);
+            this.handleDisplayValidationError(errors, 'step2');
         }
     }
 
@@ -175,8 +172,8 @@ export default class App extends Component {
                 comments: this.state.comments
             })
 
-        $("#step3").attr("status", "closing");
-        setTimeout(function() { $("#step3").attr("status", "closed");; }.bind(this), 3000);
+        $("#step3").attr("status", "closed");
+        $("#step3").css("max-height", "60px");
     }
 
     handleDisplayValidationError(errors, step) {
@@ -188,133 +185,167 @@ export default class App extends Component {
                 "<div class='alert alert-danger'>"+errors[error]+"</div>"
             );
         }
+
+        $("#"+step).css("max-height", $("#"+step)[0].scrollHeight+"px");
     }
 
     render() {
-        const { errors } = this.state;
         return (
-            <div className="row justify-content-center container">
-                <div className="form">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="step" id="step1" status="open">
-                            <div className="step-title">
-                                <span className="step-title-text">Step 1: Your details</span>
-                            </div>
-                            <div className="form-fields">
-                                <div className="errorContainer">
-                                </div>
-                                <div className="first-input step-elements">
-                                    <span>First Name</span>
-                                    <input
-                                        id="firstname"
-                                        onChange={this.handleChangeFirstname}
-                                        value={this.state.firstname}
-                                        className="step-elements-input"
-                                        required
-                                    />
-                                </div>
-                                <div className="second-input step-elements">
-                                    <span>Surname</span>
-                                    <input
-                                        id="surname"
-                                        onChange={this.handleChangeSurname}
-                                        value={this.state.surname}
-                                        className="step-elements-input"
-                                        required
-                                    />
-                                </div>
-                                <div className="third-input step-elements">
-                                    <span>Email</span>
-                                    <input
-                                        id="email"
-                                        onChange={this.handleChangeEmail}
-                                        value={this.state.email}
-                                        className="step-elements-input"
-                                        type="email"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <button type="button" className="step-elements-button" onClick={this.handleValidationStep1}>
-                                Next >
-                            </button>
-                            <br className="clear-float"/>
-                        </div>
-
-                        <div className="step" id="step2" status="closed">
-                            <div className="step-title">
-                                <span className="step-title-text">Step 2: Your details</span>
-                            </div>
-                            <div className="form-fields">
-                                <div className="errorContainer">
-                                </div>
-                                <div className="first-input step-elements">
-                                    <span>Mobile number</span>
-                                    <input
-                                        id="number"
-                                        onChange={this.handleChangeNumber}
-                                        value={this.state.number}
-                                        className="step-elements-input"
-                                        required
-                                    />
-                                </div>
-                                <div className="second-input step-elements">
-                                    <span>Date of birth</span>
-                                    <input
-                                        id="birth"
-                                        onChange={this.handleChangeBirth}
-                                        value={this.state.birth}
-                                        className="step-elements-input"
-                                        type="date"
-                                        required
-                                    />
-                                </div>
-                                <div className="third-input step-elements">
-                                    <span>Gender</span>
-                                    <div className="radio">
-                                        <label>
-                                            <input
-                                                onChange={this.handleChangeGender}
-                                                checked={this.state.gender === 'Male'}
-                                                type="radio"
-                                                value="Male"
-                                            />Male
-                                        </label>
-                                    </div>
-                                    <div className="radio">
-                                        <label>
-                                            <input
-                                                onChange={this.handleChangeGender}
-                                                checked={this.state.gender === 'Female'}
-                                                type="radio"
-                                                value="Female"
-                                            />Female
-                                        </label>
+            <div className="row h-100 justify-content-center">
+                <div className="form col-10 my-auto">
+                    <form onSubmit={this.handleSubmit} className="row p-2">
+                        <div className="col-12">
+                            <div className="step row" id="step1" status="open">
+                                <h1 className="step-title w-100">
+                                    Step 1: Your details
+                                </h1>
+                                <div className="col-12 p-0">
+                                    <div className="form-fields row">
+                                        <div className="errorContainer w-100"></div>
+                                        <div className="col-12">
+                                            <div className="row p-2">
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>First Name</span>
+                                                    <input
+                                                        id="firstname"
+                                                        onChange={this.handleChangeFirstname}
+                                                        value={this.state.firstname}
+                                                        className="step-elements-input"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>Surname</span>
+                                                    <input
+                                                        id="surname"
+                                                        onChange={this.handleChangeSurname}
+                                                        value={this.state.surname}
+                                                        className="step-elements-input"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row p-2">
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>Email</span>
+                                                    <input
+                                                        id="email"
+                                                        onChange={this.handleChangeEmail}
+                                                        value={this.state.email}
+                                                        className="step-elements-input"
+                                                        type="email"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row p-2">
+                                                <div className="col-12">
+                                                    <button type="button" className="step-elements-button float-right" onClick={this.handleValidationStep1}>
+                                                        Next >
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" className="step-elements-button" onClick={this.handleValidationStep2}>
-                                Next >
-                            </button>
-                            <br className="clear-float"/>
-                        </div>
 
-                        <div className="step" id="step3" status="closed">
-                            <div className="step-title">
-                                <span className="step-title-text">Step 3: Final comments</span>
+                            <div className="step row" id="step2" status="closed">
+                                <h1 className="step-title w-100">
+                                    Step 2: More comments
+                                </h1>
+                                <div className="col-12 p-0">
+                                    <div className="form-fields row">
+                                        <div className="errorContainer w-100"></div>
+                                        <div className="col-12">
+                                            <div className="row p-2">
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>Mobile number</span>
+                                                    <input
+                                                        id="number"
+                                                        onChange={this.handleChangeNumber}
+                                                        value={this.state.number}
+                                                        className="step-elements-input"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>Date of birth</span>
+                                                    <input
+                                                        id="birth"
+                                                        onChange={this.handleChangeBirth}
+                                                        value={this.state.birth}
+                                                        className="step-elements-input"
+                                                        type="date"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row p-2">
+                                                <div className="step-elements col-md-5 col-sm-7">
+                                                    <span>Gender</span>
+                                                    <div className="radio">
+                                                        <label>
+                                                            <input
+                                                                onChange={this.handleChangeGender}
+                                                                checked={this.state.gender === 'Male'}
+                                                                type="radio"
+                                                                value="Male"
+                                                            />Male
+                                                        </label>
+                                                    </div>
+                                                    <div className="radio">
+                                                        <label>
+                                                            <input
+                                                                onChange={this.handleChangeGender}
+                                                                checked={this.state.gender === 'Female'}
+                                                                type="radio"
+                                                                value="Female"
+                                                            />Female
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row p-2">
+                                        <div className="col-12">
+                                            <button type="button" className="step-elements-button float-right" onClick={this.handleValidationStep2}>
+                                                Next >
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="step-elements">
-                                <span>Comments (optional)</span>
-                                <textarea
-                                    onChange={this.handleChangeComments}
-                                    value={this.state.comments}
-                                    className="form-control step-comment-input"
-                                />
+
+                            <div className="step row" id="step3" status="closed">
+                                <h1 className="step-title w-100">
+                                    Step 3: Final comments
+                                </h1>
+                                <div className="col-12 p-0">
+                                    <div className="form-fields row">
+                                        <div className="col-12">
+                                            <div className="row p-2">
+                                                <div className="step-elements col-12">
+                                                    <span>Comments (optional)</span>
+                                                    <textarea
+                                                        onChange={this.handleChangeComments}
+                                                        value={this.state.comments}
+                                                        className="form-control step-comment-input"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row p-2">
+                                                <div className="col-12">
+                                                    <button type="submit" className="step-elements-button float-right">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" className="step-elements-button">
-                                Submit
-                            </button>
-                            <br className="clear-float"/>
                         </div>
                     </form>
                 </div>
@@ -325,4 +356,16 @@ export default class App extends Component {
 
 if (document.getElementById('root')) {
     ReactDOM.render(<App />, document.getElementById('root'));
+
+    setTimeout(function () {
+        $( ".step" ).each(function() {
+            if ($(this).attr("status") == "closed")
+            {
+                $(this).css("max-height", "60px");
+            }
+            else {
+                $(this).css("max-height", $(this)[0].scrollHeight+"px");
+            }
+        });
+    }, 100);
 }
